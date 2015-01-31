@@ -1,6 +1,7 @@
 #include "expr_assert.h"
 #include "stack.h"
 #include <stdio.h>
+#include <string.h>
 
 void test_creatStack_cretes_a_stack_and_sets_its_top_to_NULL(){
 	Stack stack = createStack();
@@ -21,6 +22,23 @@ void test_push_pushes_an_char_element_in_the_stack(){
 	assertEqual(push(stack,&data), 1);
 	assertEqual(*(char *)(stack.list->tail->data), 'a');
 	assertEqual(*((char *)(*stack.top)->data), 'a');
+}
+
+void test_push_pushes_an_char_string_in_the_stack(){
+	char data[]={'a','k','s','\0'};
+	Stack stack = createStack();
+	assertEqual(push(stack,data), 1);
+	assertEqual(strcmp((char *)(stack.list->tail->data), data), 0);
+	assertEqual(strcmp((char *)(*stack.top)->data, data), 0);
+}
+
+void test_push_pushes_two_char_string_in_the_stack(){
+	char first_node_data[]={'a','k','s','\0'},second_node_data[]={'q','w','e','\0'};
+	Stack stack = createStack();
+	assertEqual(push(stack,first_node_data), 1);
+	assertEqual(push(stack,second_node_data), 2);
+	assertEqual(strcmp((char *)(stack.list->tail->data), second_node_data), 0);
+	assertEqual(strcmp((char *)(*stack.top)->data, second_node_data), 0);
 }
 
 void test_push_pushes_two_element_in_the_stack(){
